@@ -50,6 +50,7 @@ export default class Modal extends Component {
     onAfterOpen: PropTypes.func,
     onRequestClose: PropTypes.func,
     closeTimeoutMS: PropTypes.number,
+    easeTransitionTimeMs: PropTypes.number,
     ariaHideApp: PropTypes.bool,
     shouldCloseOnOverlayClick: PropTypes.bool,
     parentSelector: PropTypes.func,
@@ -65,6 +66,7 @@ export default class Modal extends Component {
     bodyOpenClassName,
     ariaHideApp: true,
     closeTimeoutMS: 0,
+    easeTransitionTimeMs: null,
     shouldCloseOnOverlayClick: true,
     parentSelector() { return document.body; }
   };

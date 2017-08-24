@@ -48,6 +48,7 @@ export default class ModalPortal extends Component {
     onAfterOpen: PropTypes.func,
     onRequestClose: PropTypes.func,
     closeTimeoutMS: PropTypes.number,
+    easeTransitionTimeMs: PropTypes.number,
     shouldCloseOnOverlayClick: PropTypes.bool,
     role: PropTypes.string,
     contentLabel: PropTypes.string,
@@ -255,6 +256,20 @@ export default class ModalPortal extends Component {
       `${className} ${additional}` : className;
   }
 
+  buildEaseTransitionStyles = () => {
+    const { easeTransitionTimeMs } = this.props;
+
+    if (!easeTransitionTimeMs) {
+      return {};
+    }
+
+    return {
+      opacity: this.state.afterOpen ? 1 : 0,
+      transition: this.state.afterOpen ?
+        `opacity ${easeTransitionTimeMs}ms ease-in-out` : 0,
+    };
+  }
+
   ariaAttributes = items => Object.keys(items).reduce((acc, name) => {
     acc[`aria-${name}`] = items[name];
     return acc;
@@ -269,7 +284,7 @@ export default class ModalPortal extends Component {
       <div
         ref={this.setOverlayRef}
         className={this.buildClassName('overlay', overlayClassName)}
-        style={{ ...overlayStyles, ...this.props.style.overlay }}
+        style={{ ...overlayStyles, ...this.props.style.overlay, ...this.buildEaseTransitionStyles() }}
         onClick={this.handleOverlayOnClick}>
         <div
           ref={this.setContentRef}
